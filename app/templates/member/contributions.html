@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% set title = "Your Contributions" %}
+
+{% block title %}
+Contributions
+{% endblock %}
+
+{% block main_content %}
+
+<div class="col-sm-10 col-md-8 col-lg-6 ">
+  <h3>{{ title }}</h3>
+  <br>
+
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th class="text-right">Member Share</th>
+        <th class="text-right">Employer Share</th>
+        <th class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in contributions %}
+        <tr>
+          <td><a href="{{ url_for('member.contributions_by_year', user_id=current_user.id, year=c[0]|int) }}">{{ c[0] }}</a></td>
+          <td align="right">{{ c[1]|money if c[1] is float else c[1] }}</td>
+          <td align="right">{{ c[2]|money if c[2] is float else c[2]|safe }}</td>
+          <td align="right">{{ c[3]|money if c[3] is float else c[3] }}</td>
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
